@@ -1,0 +1,21 @@
+#!/bin/bash
+if test -f "/server.conf"; then
+    rm server/server.conf
+    ln -s /server.conf server/server.conf
+else
+    echo "RTFM"
+    exit 1
+fi
+
+if [ ! "$(ls -A /repositories)" ]; then
+    ./server/svrInstall
+    ./server/ghidraSvr stop
+
+    usr=$(echo $USERS | tr "," "\n")
+    for i in $usr; do
+        echo "adding $i"
+        ./server/svrAdmin -add $i
+    done
+fi
+
+exec ./server/ghidraSvr console

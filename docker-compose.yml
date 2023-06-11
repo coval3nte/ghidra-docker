@@ -1,0 +1,26 @@
+version: '3.8'
+
+volumes:
+  ghidra-server-repositories:
+    name: ghidra-server-repositories
+
+services:
+  ghidra-server:
+    build:
+      context: .
+      args:
+        VERSION: 10.3
+        DATE: 20230510
+    environment:
+      - USERS=${USERS:-}
+    volumes:
+      - './server.conf:/server.conf'
+      - ghidra-server-repositories:/repositories
+    expose:
+      - '13100-13102'
+    networks:
+      - ghidra-server-network
+
+networks:
+  ghidra-server-network:
+    name: ghidra-server-network
