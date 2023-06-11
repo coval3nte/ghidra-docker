@@ -4,6 +4,11 @@ volumes:
   ghidra-server-repositories:
     name: ghidra-server-repositories
 
+configs:
+  ghidra-server-config:
+    file: ./server.conf
+    name: ghidra-server-config
+
 services:
   ghidra-server:
     build:
@@ -14,8 +19,10 @@ services:
     environment:
       - USERS=${USERS:-}
     volumes:
-      - './server.conf:/server.conf'
       - ghidra-server-repositories:/repositories
+    configs:
+      - source: ghidra-server-config
+        target: /server.conf
     expose:
       - '13100-13102'
     networks:
@@ -24,3 +31,5 @@ services:
 networks:
   ghidra-server-network:
     name: ghidra-server-network
+    driver_opts:
+      encrypted: "true"
