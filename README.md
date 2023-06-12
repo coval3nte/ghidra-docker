@@ -3,8 +3,9 @@
 ## Installation Steps
 1. download and edit the [default config](https://github.com/NationalSecurityAgency/ghidra/blob/master/Ghidra/RuntimeScripts/Common/server/server.conf) parameters [1]
 2. add _default_ (comma separated) users through the environment variable [default password: `changeme`]
-3. `docker-compose up -d`
-4. Have Fun with your colleagues (or friends) and benefit of Collaborative Reverse Engineering
+3. edit the [docker-compose.yml](docker-compose.yml) file (expose ports, **update version**, CI/CD magics ...)
+4. `docker compose up -d`
+5. Have Fun with your colleagues (or friends) and benefit of Collaborative Reverse Engineering
 
 ### Notes
 > 1
