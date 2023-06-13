@@ -1,5 +1,5 @@
 FROM alpine:latest
-ENV USERS="changeme"
+ENV USERS="admin"
 ARG VERSION="10.3"
 ENV VERSION=${VERSION}
 

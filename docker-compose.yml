@@ -10,14 +10,23 @@ configs:
     name: ghidra-server-config
 
 services:
+  nginx:
+    build:
+      context: nginx
+    ports:
+      - '13100-13102:13100-13102'
+    networks:
+      - ghidra-server-external-network
+      - ghidra-server-internal-network
+
   ghidra-server:
     build:
-      context: .
+      context: ghidra
       args:
         VERSION: 10.3
         DATE: 20230510
     environment:
-      - USERS=${USERS:-}
+      - USERS=${USERS:-admin}
     volumes:
       - ghidra-server-repositories:/repositories
     configs:
@@ -26,10 +35,16 @@ services:
     expose:
       - '13100-13102'
     networks:
-      - ghidra-server-network
+      - ghidra-server-internal-network
 
 networks:
-  ghidra-server-network:
-    name: ghidra-server-network
+  ghidra-server-external-network:
+    name: ghidra-server-external-network
     driver_opts:
       encrypted: "true"
+
+  ghidra-server-internal-network:
+    name: ghidra-server-internal-network
+    driver_opts:
+      encrypted: "true"
+    internal: true
